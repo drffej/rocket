@@ -66,6 +66,10 @@
       "metadata": {
         "description": "Location for all resources."
       }
+    },
+    "webroot": {
+      "type" : "string"
+      "defaultValue": "site",
     }
   },
   "resources": [
@@ -95,7 +99,7 @@
                 "virtualApplications": [
                     {
                         "virtualPath": "/",
-                        "physicalPath": "site",
+                        "physicalPath": "[parameters('webroot')]",
                         "preloadEnabled": false,
                         "virtualDirectories": null
                     }
