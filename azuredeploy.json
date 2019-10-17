@@ -67,7 +67,7 @@
         "description": "Location for all resources."
       }
     },
-    "webroot": {
+    "physicalPath": {
       "type" : "string"
       "defaultValue": "site",
     }
@@ -99,7 +99,7 @@
                 "virtualApplications": [
                     {
                         "virtualPath": "/",
-                        "physicalPath": "[parameters('webroot')]",
+                        "physicalPath": "[parameters('physicalPath')]",
                         "preloadEnabled": false,
                         "virtualDirectories": null
                     }
