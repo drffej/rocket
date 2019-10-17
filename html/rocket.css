@@ -1,0 +1,165 @@
+$navy: #1A237E;
+$red: #F44336;
+
+@mixin rocket-fire() {
+  background-image: radial-gradient(ellipse at top, yellow 25%, var(--red) 75%);
+    border-radius: 50% 50% 50% 50% / 25% 25% 75% 75%;
+    height: 16vmin;
+    left: 4vmin;
+    position: absolute;
+    top: 32vmin;
+    width: 6vmin;
+}
+
+:root {
+  // colors
+  --navy: #{$navy};
+  --cyan: #4FC3F7;
+  --red: #{$red};
+}
+
+@keyframes fly {
+  from {
+    background-position: 0 200%,
+                         top center;
+  }
+  to {
+    background-position: 0 0,
+                         top center;
+  }
+}
+
+body {
+  align-items: center;
+  animation: fly 300ms linear infinite;
+  background-color: var(--navy);
+  background-image: url(http://vivilem.com/stars/stars.png),
+                    linear-gradient(
+                      rgba(black, 0.75),
+                      transparent
+                    );
+  background-position: center center,
+                       top center;
+  background-size: cover,
+                   100% 100vh;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  transition: all 2s;
+}
+
+.rocket {
+  background-color: var(--cyan);
+  background-image: radial-gradient(#ccc, #999 20%, transparent 25%),
+                    radial-gradient(#ccc, #999 20%, transparent 25%),
+                    radial-gradient(
+                      #333,
+                      black 54%,
+                      var(--red) 58%,
+                      var(--red) 70%,
+                      transparent 72%
+                    ),
+                    linear-gradient(
+                      90deg,
+                      transparent 50%,
+                      rgba(white, 0.5) 75%,
+                      transparent
+                    ),
+                    linear-gradient(
+                      transparent,
+                      transparent 18%,
+                      #999 18%,
+                      #999 19%,
+                      #ccc 19%,
+                      #ccc 62%,
+                      #999 62%,
+                      #999 63%,
+                      transparent 63%
+                    );
+  background-position: center 19%,
+                       center 61%,
+                       center 36%,
+                       top center;
+  background-repeat: repeat-x,
+                     repeat-x,
+                     no-repeat,
+                     no-repeat,
+                     no-repeat;
+  background-size: 15% 15%*14/32,
+                   15% 15%*14/32,
+                   65% 65%*14/32,
+                   100%,
+                   100%;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  height: 32vmin;
+  position: absolute;
+  bottom: 40vmin;
+  width: 14vmin;
+  transform: scale(1.5);
+  z-index: -1;
+  &::before {
+    content: '';
+    animation: fire 200ms ease-in-out infinite;
+    @include rocket-fire;
+  }
+  &::after {
+    background-color: var(--red);
+    background-image: repeating-linear-gradient(
+                        90deg,
+                        #333,
+                        #999,
+                        #333,
+                        #333 25%
+                      ),
+                      linear-gradient(transparent 50%, yellow);
+    background-position: center 60%,
+                         center top;
+    background-repeat: no-repeat;
+    background-size: 30% 20%, 100%;
+    box-shadow: 0 1vmin 4vmin -2vmin rgba(black, 0.55);
+    clip-path: polygon(
+                 5% 100%,
+                 0 35%,
+                 20% 0,
+                 30% 40%,
+                 25% 55%,
+                 30% 75%,
+                 5% 100%,
+      
+                 95% 100%,
+                 100% 35%,
+                 80% 0,
+                 70% 40%,
+                 75% 55%,
+                 70% 75%,
+                 95% 100%,
+      
+                 65% 100%,
+                 65% 65%,
+                 65% 50%,
+                 35% 50%,
+                 35% 65%,
+                 65% 65%,
+                 65% 100%
+    );
+    content: '';
+    height: 17vmin;
+    top: 22vmin;
+    left: -4vmin;
+    position: absolute;
+    width: 22vmin;
+    z-index: 1;
+  }
+}
+
+@keyframes fire {
+  from {
+    height: 8vmin;
+  }
+  to {
+    height: 16vmin;
+  }
+}
