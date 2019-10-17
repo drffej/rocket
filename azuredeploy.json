@@ -2,78 +2,113 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "webAppName": {
+    "siteName": {
       "type": "string",
-      "defaultValue" : "RocketWebApp",
       "metadata": {
-        "description": "Base name of the resource such as web app name and app service plan "
-      },
-      "minLength": 2
-    },
-    "sku":{
-      "type": "string",
-      "defaultValue" : "S1",
-      "metadata": {
-        "description": "The SKU of App Service Plan "
+        "description": "The name of the web app that you wish to create."
       }
     },
-    
+    "hostingPlanName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the App Service plan to use for hosting the web app."
+      }
+    },
+    "sku": {
+      "type": "string",
+      "allowedValues": [
+        "F1",
+        "D1",
+        "B1",
+        "B2",
+        "B3",
+        "S1",
+        "S2",
+        "S3",
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "defaultValue": "S1",
+      "metadata": {
+        "description": "The pricing tier for the hosting plan."
+      }
+    },
+    "workerSize": {
+      "type": "string",
+      "allowedValues": [
+        "0",
+        "1",
+        "2"
+      ],
+      "defaultValue": "0",
+      "metadata": {
+        "description": "The instance size of the hosting plan (small, medium, or large)."
+      }
+    },
     "repoURL": {
       "type": "string",
-      "defaultValue": "https://github.com/davidebbo-test/Mvc52Application.git",
+      "defaultValue": "https://github.com/drffej/rocket.git",
       "metadata": {
         "description": "The URL for the GitHub repository that contains the project to deploy."
       }
     },
-    
-    
-    "linuxFxVersion" : {
-        "type": "string",
-        "defaultValue" : "php|7.0",
-        "metadata": {
-          "description": "The Runtime stack of current web app"
-        }
+    "branch": {
+      "type": "string",
+      "defaultValue": "master",
+      "metadata": {
+        "description": "The branch of the GitHub repository to use."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
     }
-    
-    
-    
-    
-  },
-  "variables": {
-    "webAppPortalName": "[concat(parameters('webAppName'), '-webapp')]",
-    "appServicePlanName": "[concat('AppServicePlan-', parameters('webAppName'))]"
   },
   "resources": [
     {
+      "apiVersion": "2015-08-01",
+      "name": "[parameters('hostingPlanName')]",
       "type": "Microsoft.Web/serverfarms",
-      "apiVersion": "2018-02-01",
-      "name": "[variables('appServicePlanName')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "sku": {
-        "name": "[parameters('sku')]"
+        "name": "[parameters('sku')]",
+        "capacity": "[parameters('workerSize')]"
       },
-      "kind": "linux",
-      "properties":{
-        "reserved":true
+      "properties": {
+        "name": "[parameters('hostingPlanName')]"
       }
     },
     {
+      "apiVersion": "2015-08-01",
+      "name": "[parameters('siteName')]",
       "type": "Microsoft.Web/sites",
-      "apiVersion": "2018-11-01",
-      "name": "[variables('webAppPortalName')]",
-      "location": "[resourceGroup().location]",
-      "kind": "app",
+      "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
+        "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
       ],
       "properties": {
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
-        "siteConfig": {
-            "linuxFxVersion": "[parameters('linuxFxVersion')]"
-          },
-        "RepoUrl": "[parameters('repoURL')]",
-        "IsManualIntegration": true
-      }
+        "serverFarmId": "[parameters('hostingPlanName')]"
+      },
+      "resources": [
+        {
+          "apiVersion": "2015-08-01",
+          "name": "web",
+          "type": "sourcecontrols",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+          ],
+          "properties": {
+            "RepoUrl": "[parameters('repoURL')]",
+            "branch": "[parameters('branch')]",
+            "IsManualIntegration": true
+          }
+        }
+      ]
     }
   ]
 }
