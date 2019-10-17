@@ -24,7 +24,9 @@
           "description": "The Runtime stack of current web app"
         }
     }
-    
+    "repoUrl": {
+      "type": "string"
+    }
   },
   "variables": {
     "webAppPortalName": "[concat(parameters('webAppName'), '-webapp')]",
