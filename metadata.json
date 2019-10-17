@@ -1,9 +1,0 @@
-{
-  "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
-  "itemDisplayName": "Deploy a Linux Rocket Jason WebApp",
-  "type": "QuickStart",
-  "description": "This template deploy an app service plan, a basic Linux web app and HTML rocket",
-  "summary": "The DevOps Rocket",
-  "githubUsername": "drffej",
-  "dateUpdated": "2019-10-17"
-}
