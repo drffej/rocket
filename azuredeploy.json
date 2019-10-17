@@ -59,7 +59,9 @@
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
         "siteConfig": {
             "linuxFxVersion": "[parameters('linuxFxVersion')]"
-          }
+          },
+        "RepoUrl": "[parameters('repoUrl')]",
+            "IsManualIntegration": true
       }
     }
   ]
