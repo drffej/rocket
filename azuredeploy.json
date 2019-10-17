@@ -17,6 +17,16 @@
         "description": "The SKU of App Service Plan "
       }
     },
+    
+    "repoURL": {
+      "type": "string",
+      "defaultValue": "https://github.com/davidebbo-test/Mvc52Application.git",
+      "metadata": {
+        "description": "The URL for the GitHub repository that contains the project to deploy."
+      }
+    },
+    
+    
     "linuxFxVersion" : {
         "type": "string",
         "defaultValue" : "php|7.0",
@@ -24,6 +34,10 @@
           "description": "The Runtime stack of current web app"
         }
     }
+    
+    
+    
+    
   },
   "variables": {
     "webAppPortalName": "[concat(parameters('webAppName'), '-webapp')]",
@@ -57,8 +71,8 @@
         "siteConfig": {
             "linuxFxVersion": "[parameters('linuxFxVersion')]"
           },
-        "RepoUrl": "[parameters('repoUrl')]",
-            "IsManualIntegration": true
+        "RepoUrl": "[parameters('repoURL')]",
+        "IsManualIntegration": true
       }
     }
   ]
