@@ -68,8 +68,8 @@
       }
     },
     "physicalPath": {
-      "type" : "string"
-      "defaultValue": "site",
+      "type" : "string",
+      "defaultValue": "site"
     }
   },
   "resources": [
