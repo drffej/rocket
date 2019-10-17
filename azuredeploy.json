@@ -86,7 +86,7 @@
     {
             "type": "Microsoft.Web/sites/config",
             "apiVersion": "2016-08-01",
-            "name": "[concat(parameters('sites_rocketa4e0_name'), '/web')]",
+            "name": "[concat(parameters('siteName'), '/web')]",
             "location": "West Europe",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/sites', parameters('sites_rocketa4e0_name'))]"
